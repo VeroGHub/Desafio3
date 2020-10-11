@@ -1,0 +1,21 @@
+FROM ubuntu:20.04
+
+#Se instala open_ssh
+RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+#RUN mkdir /desavol
+#Se setea password en cuenta root
+RUN echo 'root:prueba' | chpasswd
+
+#Se habilita login a root
+RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+
+# SSH login fix, para que no te bote despues de login
+RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+
+ENV NOTVISIBLE="in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
+# Exponemos puerto ssh y mongo
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]

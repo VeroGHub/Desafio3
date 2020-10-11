@@ -1,0 +1,43 @@
+---
+- hosts: ubuntu_ssh1 
+  tasks:
+  - name: Instala MongoDB
+    apt:
+       name: mongodb
+       state: present
+  - name: Modifica IP en mongo.conf
+    replace:
+       path: /etc/mongodb.conf
+       regexp: 'bind_ip = 127.0.0.1'
+       replace: 'bind_ip = 0.0.0.0'
+  - name: Habilita Port en mongo.conf
+    replace:
+       path: /etc/mongodb.conf
+       regexp: '#port = 27017'
+       replace: 'port = 27017'
+  - name: Inicia MongoDB
+    service:
+       name: mongodb
+       state: started
+- hosts: ubuntu_ssh2
+  tasks:
+  - name: Instala Apache
+    apt:
+       name: apache2
+       state: present
+  - name: Inicia Apache
+    service:
+       name: apache2
+       state: started
+- hosts: ubuntu_ssh3
+  tasks:
+  - name: Instala Node.js
+    apt:
+       name: nodejs
+       state: present
+  - name: Instala npm
+    apt:
+       name: npm
+       state: present
+
+

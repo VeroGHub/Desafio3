@@ -1,0 +1,42 @@
+version: "3.0"
+services:
+     ubuntu_ssh1:
+         build:
+            context: .
+            dockerfile: Dockerfile_ssh
+         hostname: ubuntu_ssh1
+         networks:
+            - ssh-net
+         ports:
+            - 27017:27017
+     ubuntu_ssh2:
+         build:
+            context: .
+            dockerfile: Dockerfile_ssh
+         hostname: ubuntu_ssh2
+         networks:
+            - ssh-net
+     ubuntu_ssh3:
+         build:
+            context: .
+            dockerfile: Dockerfile_ssh
+         hostname: ubuntu_ssh3
+         networks:
+            - ssh-net
+     ansible:
+         build:
+            context: .
+            dockerfile: Dockerfile_ansible
+         command: ["/bin/bash","-c","sshpass -p prueba ssh-copy-id -o 'StrictHostKeyChecking no' root@ubuntu_ssh1 && sshpass -p prueba ssh-copy-id -o 'StrictHostKeyChecking no' root@ubuntu_ssh2 && sshpass -p prueba ssh-copy-id -o 'StrictHostKeyChecking no' root@ubuntu_ssh3 && /usr/sbin/sshd -D"]
+         hostname: ansible
+         networks:
+            - ssh-net
+         depends_on:
+            - ubuntu_ssh1
+            - ubuntu_ssh2
+            - ubuntu_ssh3 
+
+networks:
+  ssh-net:
+
+
