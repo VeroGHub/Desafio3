@@ -25,6 +25,10 @@
     apt:
        name: apache2
        state: present
+  - name: Genera Index.html
+    copy:
+       src: /root/index.html
+       dest: /var/www/html/index.html
   - name: Inicia Apache
     service:
        name: apache2
@@ -39,5 +43,7 @@
     apt:
        name: npm
        state: present
+  - name: Ejecuta servicio node.js
+    shell: nohup node serverNode.js &
 
 

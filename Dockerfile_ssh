@@ -18,4 +18,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 # Exponemos puerto ssh y mongo
 EXPOSE 22
+COPY serverNode.js /root/serverNode.js
+WORKDIR /root
+
 CMD ["/usr/sbin/sshd", "-D"]

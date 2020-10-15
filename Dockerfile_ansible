@@ -10,9 +10,10 @@ RUN sed -i 's|#inventory      = /etc/ansible/hosts|inventory=/etc/ansible/hosts|
 RUN echo 'ubuntu_ssh1\nubuntu_ssh2\nubuntu_ssh3' >>/etc/ansible/hosts
 
 #Se genera llave ssh
-RUN ssh-keygen -q -t rsa -N ' ' -f /root/.ssh/id_rsa
+RUN ssh-keygen -q -t rsa -N '' -f /root/.ssh/id_rsa
 
 #Se copia playbook desde local hacia contenedor ansible
 COPY playdesa3.yml /root/playdesa3.yml
+COPY index.html /root/index.html
 WORKDIR /root
 CMD ["/usr/sbin/sshd", "-D"]

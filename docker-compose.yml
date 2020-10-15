@@ -16,6 +16,8 @@ services:
          hostname: ubuntu_ssh2
          networks:
             - ssh-net
+         ports:
+            - 80:80
      ubuntu_ssh3:
          build:
             context: .
@@ -23,6 +25,8 @@ services:
          hostname: ubuntu_ssh3
          networks:
             - ssh-net
+         ports:
+            - 3000:3000
      ansible:
          build:
             context: .
