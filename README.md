@@ -1,4 +1,4 @@
-#INSTRUCCIONES DOCKER COMPOSE
+# INSTRUCCIONES DOCKER COMPOSE
 
 1. Abrir conexion a terminal o linea de comando.
  
